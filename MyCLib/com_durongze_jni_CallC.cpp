@@ -2,6 +2,8 @@
 #include <jni.h>
 /* Header for class com_durongze_jni_CallC */
 #include <stdio.h>
+#include <string.h>
+#include <errno.h>
 #ifndef _Included_com_durongze_jni_CallC
 #define _Included_com_durongze_jni_CallC
 #ifdef __cplusplus
@@ -43,7 +45,18 @@ JNIEXPORT jint JNICALL Java_com_example_myapplication_MainActivity_CInterfaceTes
   (JNIEnv *env, jobject)
   {
       printf(__FUNCTION__);
-      return 77;
+      #if 1
+      FILE* fp = fopen("/data/local/tmp/test.txt", "w+");
+      if (fp == NULL) {
+          return errno;
+      }
+      char buf[64] = {"xxxxxxxxxxxxxxx"}; 
+      fwrite(buf, strlen(buf), 1, fp);
+      fclose(fp);
+      return 999;
+      #else
+      return 888;
+      #endif
   }
 #ifdef __cplusplus
 #if __cplusplus
