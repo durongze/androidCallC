@@ -7,3 +7,6 @@ rem javac -encoding utf-8 -h . callc.java
 ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=Application.mk APP_BUILD_SCRIPT=Android.mk
 
 pause
+
+rem adb shell am force-stop com.example.myapplication
+rem adb shell am start -n "com.example.myapplication/com.example.myapplication.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -D
