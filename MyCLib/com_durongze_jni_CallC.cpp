@@ -5,20 +5,62 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+
 #ifndef _Included_com_durongze_jni_CallC
 #define _Included_com_durongze_jni_CallC
+
 #ifdef __cplusplus
 #if __cplusplus
 extern "C" {
 #endif
 #endif
 
-#define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, "ProjectName", __VA_ARGS__)
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG , "ProjectName", __VA_ARGS__)
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO , "ProjectName", __VA_ARGS__)
-#define LOGW(...) __android_log_print(ANDROID_LOG_WARN , "ProjectName", __VA_ARGS__)
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR , "ProjectName", __VA_ARGS__)
+#define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, "DYZ", __VA_ARGS__)
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG , "DYZ", __VA_ARGS__)
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO , "DYZ", __VA_ARGS__)
+#define LOGW(...) __android_log_print(ANDROID_LOG_WARN , "DYZ", __VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR , "DYZ", __VA_ARGS__)
 
+void TestMain()
+{
+    int i;
+    char c;
+    short s;
+	float f;
+
+	c = -1;
+    f = (float)c;
+    LOGE("1. c:0x%x\n", c);
+    LOGE("1. f:%lf\n", f);
+    c = 0;
+    f = c;
+    LOGE("2. c:0x%x\n", c);
+    LOGE("2. f:%lf\n", f);
+    c = -1;
+	f = c;
+    for (int i = 0; i < 1000; i++){
+        f = f + c;
+    }
+	LOGI("3. f + c:%lf\n", f);
+	i = -1;
+	f = i;
+    for (int idx = 0; idx < 1000; idx ++){
+        f = f + i;
+    }
+    LOGI("3. f + i:%lf\n", f);
+	
+	c = 0;
+    i = 1;
+    f = (!c)*(i);
+    for (int idx = 0; idx < 5; idx++){
+        f = f + f;
+    }
+    LOGE("4. f:%lf\n", f);
+    
+    s = -1;
+    f = s;
+    LOGE("5. f:%lf\n", f);
+}
 /*
  * Class:     com_durongze_jni_CallC
  * Method:    CInterface
@@ -52,6 +94,7 @@ JNIEXPORT jobjectArray JNICALL Java_com_example_myapplication_MainActivity_CInte
 JNIEXPORT jint JNICALL Java_com_example_myapplication_MainActivity_CInterfaceTest
   (JNIEnv *env, jobject)
   {
+      TestMain();
       printf(__FUNCTION__);
       LOGE(__FUNCTION__);
       #if 1
