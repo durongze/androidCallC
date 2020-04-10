@@ -24,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
     static {
         System.loadLibrary("my");
     }
+
+    public void JInterface()
+    {
+        Log.e(TAG, "JInterface");
+    }
+
     public void c_call_test()
     {
         int ret = CInterfaceTest();
