@@ -55,7 +55,7 @@ JNIEXPORT jint JNICALL Java_com_example_myapplication_MainActivity_CInterfaceTes
       printf(__FUNCTION__);
       LOGE(__FUNCTION__);
       #if 1
-      FILE* fp = fopen("/mnt/sdcard/test.txt", "w+");
+      FILE* fp = fopen("/data/local/tmp/test.txt", "w+");
       if (fp == NULL) {
           return errno;
       }
@@ -64,6 +64,10 @@ JNIEXPORT jint JNICALL Java_com_example_myapplication_MainActivity_CInterfaceTes
       fclose(fp);
       return 999;
       #else
+	  jclass jClass = env->FindClass("com/example/myapplication/MainActivity");
+	  jobject jObject = env->AllocObject(jClass);
+	  jmethodID jMethodId = env->GetMethodID(jClass, "JInterface", "()V");
+	  env->CallVoidMethod(jObject, jMethodId);
       return 888;
       #endif
   }
