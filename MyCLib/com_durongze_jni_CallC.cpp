@@ -24,7 +24,7 @@ extern "C" {
 void TestMain()
 {
     int i;
-    char c;
+    signed char c;
     short s;
 	float f;
 
@@ -70,6 +70,7 @@ void TestMain()
 JNIEXPORT jobjectArray JNICALL Java_com_example_myapplication_MainActivity_CInterface
   (JNIEnv *env, jobject, jobjectArray names, jintArray ages, jfloatArray heights, jint num)
   {
+      jboolean b = false;
       jobjectArray result;
       jclass intArrCls = env->FindClass("java/lang/String");
       result = env->NewObjectArray(num, intArrCls, NULL);
@@ -80,11 +81,11 @@ JNIEXPORT jobjectArray JNICALL Java_com_example_myapplication_MainActivity_CInte
       int hsLen = env->GetArrayLength(heights);
       for (idx = 0; idx < num; ++idx) {
         jstring ns = static_cast<jstring>(env->GetObjectArrayElement(names, idx));
-        const char* pns = env->GetStringUTFChars(ns,0);
+        const char* pns = env->GetStringUTFChars(ns, &b);
         printf("%s:       names[%d]:%s,         ages[%d]:%d,    heights[%d]:%lf\n",
             __FUNCTION__, idx, pns, idx, as[idx], idx, hs[idx]);
         env->SetObjectArrayElement(result, idx, ns);
-		env->ReleaseStringUTFChars(ns, 0);
+		env->ReleaseStringUTFChars(ns, pns);
       }
       env->ReleaseIntArrayElements(ages, as, 0);
       env->ReleaseFloatArrayElements(heights, hs, 0);
@@ -95,8 +96,6 @@ JNIEXPORT jint JNICALL Java_com_example_myapplication_MainActivity_CInterfaceTes
   (JNIEnv *env, jobject)
   {
       TestMain();
-      printf(__FUNCTION__);
-      LOGE(__FUNCTION__);
       #if 1
       FILE* fp = fopen("/data/local/tmp/test.txt", "w+");
       if (fp == NULL) {
