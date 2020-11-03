@@ -1,0 +1,17 @@
+刷入流程
+解锁并刷入最新版的TWRP（101）
+1.重启到twrp
+2.双清+三清
+3.拷贝TWRP  底包  刷机包 gapps Magisk 到手机存储
+4.刷入底包  +twrp  +重启到twrp
+5.刷入底包  +twrp  +重启到twrp
+6.刷入AOSIP  +twrp  +重启到twrp
+7.刷入gapps  +Magisk
+8.重启到系统
+
+
+升级流程
+1.重启到twrp
+2.刷入最新AOSIP  +twrp  +重启到twrp
+3.输入gapps  +Magisk
+4.重启到系统
