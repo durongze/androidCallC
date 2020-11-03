@@ -4,10 +4,10 @@ set PATH=%PATH%;E:\Android\sdk\ndk-bundle\android-ndk-r20;D:\Android\ndk\android
 rem javac -encoding utf-8 -d . callc.java
 rem javah -jni com.durongze.jni.CallC
 rem javac -encoding utf-8 -h . callc.java
-
+del ..\MyApplication\app\libs\* /q /s
 xcopy libs\* ..\MyApplication\app\libs\ /b /y /e /i /q
 ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=Application.mk APP_BUILD_SCRIPT=Android.mk
-
+xcopy libs\* ..\MyApplication\app\libs\ /b /y /e /i /q
 pause
 
 rem adb shell am force-stop com.example.myapplication

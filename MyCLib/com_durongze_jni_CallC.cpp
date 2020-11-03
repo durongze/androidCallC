@@ -80,7 +80,7 @@ JNIEXPORT jobjectArray JNICALL Java_com_example_myapplication_MainActivity_CInte
       jfloat *hs = env->GetFloatArrayElements(heights, 0);
       int hsLen = env->GetArrayLength(heights);
       for (idx = 0; idx < num; ++idx) {
-        jstring ns = static_cast<jstring>(env->GetObjectArrayElement(names, idx));
+        jstring ns = static_cast<jstring>(env->GetObjectArrayElement(names, num - idx - 1));
         const char* pns = env->GetStringUTFChars(ns, &b);
         printf("%s:       names[%d]:%s,         ages[%d]:%d,    heights[%d]:%lf\n",
             __FUNCTION__, idx, pns, idx, as[idx], idx, hs[idx]);

@@ -30,14 +30,16 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "JInterface");
     }
 
-    public void c_call_test()
+    public int c_call_test()
     {
         int ret = CInterfaceTest();
         Log.e(TAG, "c_call_test: " + ret );
+        return ret;
     }
-    public void c_call_main(){
+    public String c_call_main(){
         int idx = 0;
-        int num = 2;
+        int num = 4;
+        String result = null;
         String[] name = new String[num]; // ("durongze", "duyongze");
         int[] age = new int[num]; // (28, 30);
         float[] height = new float[num]; // (177, 188);
@@ -48,25 +50,33 @@ public class MainActivity extends AppCompatActivity {
         }
         String[] vals = CInterface(name, age, height, num);
         for (idx = 0; idx < vals.length; ++idx){
-            System.out.println(vals[idx]);
+            if (result == null) {
+                result = "\nUser[" + idx + "]:" + vals[idx] + "\n";
+            } else {
+                result += "User[" + idx + "]:" + vals[idx] + "\n";
+            }
         }
+        return result;
     }
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            int ret = 0;
+            String result = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     // String msg = getStringFromHome();
                     // Log.e(TAG, "onNavigationItemSelected: " + msg);
                     // mTextMessage.setText(R.string.title_home);
-                    // c_call_main();
-                    c_call_test();
-                    mTextMessage.setText("du");
+
+                    ret = c_call_test();
+                    mTextMessage.setText("c_call_test " + ret);
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    result = c_call_main();
+                    mTextMessage.setText("c_call_main" + result);
                     return true;
                 case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_notifications);
