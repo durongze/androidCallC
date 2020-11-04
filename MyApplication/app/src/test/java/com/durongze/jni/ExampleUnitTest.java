@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.durongze.jni;
 
 import org.junit.Test;
 

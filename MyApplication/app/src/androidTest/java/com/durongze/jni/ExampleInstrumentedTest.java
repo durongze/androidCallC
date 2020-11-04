@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.durongze.jni;
 
 import android.content.Context;
 

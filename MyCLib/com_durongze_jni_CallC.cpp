@@ -67,7 +67,8 @@ void TestMain()
  * Signature: ([Ljava/lang/String;[I[FI)[Ljava/lang/String;
  */
  //                            Java_com_durongze_jni_CallC_CInterface
-JNIEXPORT jobjectArray JNICALL Java_com_example_myapplication_MainActivity_CInterface
+ //                            Java_com_example_myapplication_MainActivity_CInterface
+JNIEXPORT jobjectArray JNICALL Java_com_durongze_jni_JavaCallCpp_GenUserList
   (JNIEnv *env, jobject, jobjectArray names, jintArray ages, jfloatArray heights, jint num)
   {
       jboolean b = false;
@@ -92,26 +93,34 @@ JNIEXPORT jobjectArray JNICALL Java_com_example_myapplication_MainActivity_CInte
       return result;
   }
 
-JNIEXPORT jint JNICALL Java_com_example_myapplication_MainActivity_CInterfaceTest
-  (JNIEnv *env, jobject)
+JNIEXPORT jint JNICALL Java_com_durongze_jni_JavaCallCpp_WriteCtxToFile
+  (JNIEnv *env, jobject, jstring fileName)
   {
       TestMain();
-      #if 1
-      FILE* fp = fopen("/data/local/tmp/test.txt", "w+");
-      if (fp == NULL) {
-          return errno;
+	  char buf[64] = {"xxxxxxxxxxxxxxx"}; 
+	  jboolean b = false;
+	  const char* fn = env->GetStringUTFChars(fileName, &b);
+      FILE* fp = fopen(fn, "w+");
+      if (fp != NULL) {
+		  fwrite(buf, strlen(buf), 1, fp);
+		  fclose(fp);
       }
-      char buf[64] = {"xxxxxxxxxxxxxxx"}; 
-      fwrite(buf, strlen(buf), 1, fp);
-      fclose(fp);
+	  env->ReleaseStringUTFChars(fileName, fn);
       return 999;
-      #else
-	  jclass jClass = env->FindClass("com/example/myapplication/MainActivity");
+  }
+  JNIEXPORT jint JNICALL Java_com_durongze_jni_JavaCallCpp_CppCallJava
+  (JNIEnv *env, jobject, jstring className, jstring funcName)
+  {
+	  jboolean b = false;
+	  const char* cn = env->GetStringUTFChars(className, &b);
+	  const char* fn = env->GetStringUTFChars(funcName, &b);
+	  jclass jClass = env->FindClass(cn);
 	  jobject jObject = env->AllocObject(jClass);
-	  jmethodID jMethodId = env->GetMethodID(jClass, "JInterface", "()V");
+	  jmethodID jMethodId = env->GetMethodID(jClass, fn, "()V");
 	  env->CallVoidMethod(jObject, jMethodId);
+	  env->ReleaseStringUTFChars(className, cn);
+	  env->ReleaseStringUTFChars(funcName, fn);
       return 888;
-      #endif
   }
 #ifdef __cplusplus
 #if __cplusplus
