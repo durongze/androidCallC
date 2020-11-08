@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     mTextMessage.setText("c_call_main" + WriteCtxToFile("xxx.txt"));
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications + CppCallJava("JInterface"));
+                    mTextMessage.setText("notifications" + CppCallJava("JInterface"));
                     return true;
             }
             return false;
